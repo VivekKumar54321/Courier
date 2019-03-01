@@ -1,0 +1,111 @@
+
+<head>
+  <title>Courier</title>
+</head>
+
+<form *ngIf="CreateCourier" name="form" style="text-align:left" class="form-horizontal" (ngSubmit)="f.form.valid && onSubmit(f)" #f="ngForm" novalidate>
+  <div>
+    <div class=col-sm-4>
+      <label for="couriername">CourierName</label>
+      <input type="text" name=courierName [(ngModel)]="post.courierName" class="form-control" #couriername="ngModel" [ngClass]="{'is-invalid':f.submitted && couriername.invalid}" required maxlength="20" [pattern]="stringPattern" />
+      <div *ngIf="f.submitted && couriername.invalid" class="invalid-feedback">
+        <div *ngIf="couriername.errors.required">CourierName is required </div>
+        <div *ngIf="couriername.errors.pattern">CourierName is invalid</div>
+      </div>
+    </div>
+  </div>
+  <br />
+  <br />
+  <br />
+  <br />
+
+  <div>
+    <div class="btn-toolbar">
+      <button class="btn btn-primary btn-md" style="margin-right:10px;" type="submit">
+        <span *ngIf="!post.courierId">Save</span>
+        <span *ngIf="post.courierId">Update</span>
+      </button>
+
+      <button style="margin-right:10px;" class="btn btn-primary btn-md" type="reset" (click)="resetValue()">Reset</button>
+    </div>
+  </div>
+
+
+
+
+</form>
+<div style="text-align:left"   >
+  <button type="button"  *ngIf="!CreateCourier" class="btn btn-link" (click)="createform()">Create </button>
+</div>
+<div style="text-align:left">
+  <button type="button" *ngIf="CreateCourier" class="btn btn-link" (click)="backform()">Home </button>
+</div>
+
+
+<form>
+  <div>
+    <!--Searching-->
+    <div>
+      <div class="control-label col-sm-4">
+        <input type="text" class="form-control" placeholder="Search for..." [(ngModel)]="searchText" (ngModelChange)="cancelSearch($event)" name="searchText">
+      </div>
+      <div class="control-label col-sm-1">
+        <button class="btn btn-primary" type="submit" (click)="searchField(searchText, true)" *ngIf="!search"> Search </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+ <form>
+  <div>
+    <table class="table table-bordered table-sm">
+      <tr>
+        <th>
+          SN
+          <span [ngClass]="isCategory === true ? 'fa fa-caret-up' : 'fa fa-caret-down'" (click)="sortByField(isDescending, 'courierId')"></span>
+        </th>
+        <th>
+          CourierName
+          <span [ngClass]="isParentCategory === true ? 'fa fa-caret-up' : 'fa fa-caret-down'" (click)="sortByField(isDescending, 'CourierName')"></span>
+        </th>
+        <th>Action</th>
+      </tr>
+
+      <tr *ngFor="let post of posts;let i=index">
+        <td>{{i+1}}</td>
+        <td>{{post.courierName}}</td>
+
+        <td>
+          <div class="btn-toolbar">
+            <button class="btn btn-success"  style="margin-right:10px;" (click)="Edititem(post.courierId)">Edit</button>
+            <button class="btn btn-danger" style="margin-right:10px;" (click)="Deleteitem(post.courierId)">Delete</button>
+
+          </div>
+        </td>
+
+      </tr>
+    </table>
+  </div>
+</form>
+ <div class="form-group">
+   <div class="row">
+     <div class="col-sm-8">
+       <nav aria-label="Page navigation example">
+         <app-pagination [pager]="pager" (offset)="getPagedList($event)"></app-pagination>
+         <div>
+         </div>
+       </nav>
+     </div>
+
+     <div class="col-sm-3">
+       <div class="pull-right">
+         <select class="form-control" [(ngModel)]="pagedDataRequest.pageSize" (ngModelChange)="onChange()">
+           <option *ngFor="let pageSize of pageSizes">
+             {{pageSize}}
+           </option>
+         </select>
+       </div>
+     </div>
+   </div>
+ </div>

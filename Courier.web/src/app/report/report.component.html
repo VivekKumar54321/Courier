@@ -1,0 +1,84 @@
+
+
+
+  <!--Heading-->
+  <div>
+    <h3><label > Report</label>  </h3>
+  </div>
+  
+ 
+      <div class="temp123">
+
+        <p id="text">SHEET 1/2</p>
+        <p id="text-a">COURIER SIGN ON:SRA DESK:MON-FRI</p>
+
+        <div class="wrapper">
+
+          <input type="text" id="date" bsDaterangepicker placeholder="Date" [(ngModel)]="date" [bsConfig]="datePickerConfig">
+
+        </div>
+      </div>
+ 
+    <form> 
+      <div class="form-group">
+      <table class="table table-striped" border="1">
+        <thead>
+          <tr>
+            <th>CourierName</th>
+            <th>Run</th>
+            <th>Number Of Samples</th>
+            <th>9.00 TO 9.30(AM)</th>
+            <th>9.30 TO 10.00<br />(AM)</th>
+            <th>10.00 TO 10.30<br />(AM)</th>
+            <th>10.30 TO 11.00<br />(AM)</th>
+            <th>11.00 TO 11.30<br />(AM)</th>
+            <th>11.30 TO 12.00<br />(AM)</th>
+            <th>12.00 TO 12.30<br />(PM)</th>
+            <th>12.30 TO 1.00(PM)</th>
+            <th>1.00 TO 1.30(PM)</th>
+            <th>1.30 TO 2.00(PM)</th>
+            <th>2.00 TO 2.30(PM)</th>
+            <th>2.30 TO 3.00(PM)</th>
+            <th>3.00 TO 3.30(PM)</th>
+            <th>3.30 TO 4.00(PM)</th>
+            <th>4.00 TO 4.30(PM)</th>
+            <th>4.30 TO 5.00(PM)</th>
+
+          </tr>
+        </thead>
+
+    
+
+          <tr *ngFor=" let post of posts;">
+            <td>  {{post.courier.courierName}} </td>
+            <td>  {{post.courierRuns.runName}} </td>
+            <td>  {{post.numberOfSamples}} </td>
+
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <td></td>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+
+          </tr>
+
+      </table>
+        </div>
+</form>
+
+
+
+
+
+

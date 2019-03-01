@@ -1,0 +1,171 @@
+
+<form *ngIf="CreateCourierRunDetails" name="form" style="text-align:left" class="form-horizontal" (ngSubmit)="f.form.valid && saveCourierRunDetailsData(f)" #f="ngForm" novalidate>
+
+  <!--Heading-->
+  <div>
+    <h3><label> Create Courier Run Details</label></h3>
+  </div>
+
+
+  <!--CourierName from Courier Component-->
+  <div>
+    <label class="control-label col-sm-2">Courier Name </label>
+    <div class="form-group select-box col-sm-4">
+      <select class="form-control" name="courierName" [(ngModel)]="post.courier.courierId" #courierName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && courierName.invalid  }" required>
+        <option> --Select Courier Name --</option>
+        <option *ngFor="let dropdownC of dropdownsC" value={{dropdownC.id}}>
+          {{dropdownC.value}}
+        </option>
+
+      </select>
+      <div *ngIf="f.submitted &&  courierName.invalid" class="invalid-feedback">
+        <div *ngIf="courierName.errors.required">Courier Name is required</div>
+
+      </div>
+    </div>
+  </div>
+
+  <!--RunName from CourierRuns Component-->
+  <div>
+    <label class="control-label col-sm-2">Run Name </label>
+
+    <div class="form-group select-box col-sm-4">
+      <select class="form-control" name="runName" [(ngModel)]="post.courierRuns.courierRunsId" #runName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && runName.invalid }" required>
+        <option> --Select Courier Run Name--</option>
+        <option *ngFor="let dropdown of dropdowns" value={{dropdown.id}}>
+        {{dropdown.value}}  </option>
+      </select>
+      <div *ngIf="f.submitted && runName.invalid" class="invalid-feedback">
+        <div *ngIf="runName.errors.required">RunName is required</div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="form-group">
+    <label for="numberOfSamples" class="control-label col-sm-2">Number Of Sample </label>
+    <div class="col-sm-4">
+      <input type="number" class="form-control" placeholder="Enter the number of Samples" name="numberOfSamples" [(ngModel)]="post.numberOfSamples" #numberOfSamples="ngModel" [ngClass]="{ 'is-invalid': f.submitted && numberOfSamples.invalid}" required maxlength="50">
+      <div *ngIf="f.submitted && numberOfSamples.invalid" class="invalid-feedback">
+        <div *ngIf="numberOfSamples.errors.required">Number Of Sample is required</div>
+        <div *ngIf="numberOfSamples.errors.maxlength">Limit Exceeded</div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <div class="btn-toolbar">
+    <button class="btn btn-primary btn-md" style="margin-right:10px;">
+      <span *ngIf="!post.courierRunDetailId"> Save </span>
+      <span *ngIf="post.courierRunDetailId"> Update </span>
+    </button>
+
+    <button style="margin-right:10px;" class="btn btn-primary btn-md" type="reset" (click)="resetValue()">     Reset   </button>
+  </div>
+
+
+</form>
+
+<div style="text-align:left">
+  <button type="button" *ngIf="!CreateCourierRunDetails" class="btn btn-link" (click)="createform()">Create </button>
+</div>
+<div style="text-align:left">
+  <button type="button" *ngIf="CreateCourierRunDetails" class="btn btn-link" (click)="backform()">Home </button>
+</div>
+
+
+<form>
+  <div>
+    <!--Searching-->
+    <div>
+      <div class="control-label col-sm-4">
+        <input type="text" class="form-control" placeholder="Search for..." [(ngModel)]="searchText" (ngModelChange)="cancelSearch($event)" name="searchText">
+      </div>
+      <div class="control-label col-sm-1">
+        <button class="btn btn-primary" type="submit" (click)="searchField(searchText, true)" *ngIf="!search"> Search </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+
+<form>
+  <table class="table table-striped" border="1">
+    <tr>
+      <th>
+        <label>
+          SN
+          <span [ngClass]="isCategory === true ? 'fa fa-caret-up' : 'fa fa-caret-down'" (click)="sortByField(isDescending, 'courierRunDetailsId')"></span>
+        </label>
+
+      </th>
+      <th>
+        <label>
+          Courier
+          <span [ngClass]="isParentCategory === true ? 'fa fa-caret-up' : 'fa fa-caret-down'" (click)="sortByField(isDescending, 'CourierName')"></span>
+        </label>
+      </th>
+      <th>
+        <label>
+          Run Name
+          <span [ngClass]="isChildCategory === true ? 'fa fa-caret-up' : 'fa fa-caret-down' " (click)="sortByField(isDescending, 'RunName')"></span>
+        </label>
+      </th>
+      <th>
+        <label>
+          Number Of Sample
+          <span [ngClass]="isSampleCategory === true ? 'fa fa-caret-up' : 'fa fa-caret-down' " (click)="sortByField(isDescending, 'NumberOfSamples')"></span>
+        </label>
+      </th>
+      <th>
+        <label>
+          Action
+        </label>
+      </th>
+
+    </tr>
+
+    <tr *ngFor="let post of posts; let i=index">
+      <td>  {{i+1}} </td>
+      <td>  {{post.courier.courierName}} </td>
+      <td>  {{post.courierRuns.runName}} </td>
+      <td>  {{post.numberOfSamples}} </td>
+      <td hidden>{{post.courierArrivalTime }} </td>
+
+
+
+      <td>
+        <div>
+          <button class="btn btn-success" style="margin-right:10px;" (click)="editCRD(post.courierRunDetailId)">Edit </button>
+          <button class="btn btn-danger" style="margin-right:10px;" (click)="deleteCRD(post.courierRunDetailId)">Delete</button>
+        </div>
+      </td>
+
+    </tr>
+
+  </table>
+</form>
+<div class="form-group">
+  <div class="row">
+    <div class="col-sm-8">
+      <nav aria-label="Page navigation example">
+        <app-pagination [pager]="pager" (offset)="getPagedList($event)"></app-pagination>
+        <div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="pull-right">
+        <select class="form-control" [(ngModel)]="pagedDataRequest.pageSize" (ngModelChange)="onChange()">
+          <option *ngFor="let pageSize of pageSizes">
+            {{pageSize}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>

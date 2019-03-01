@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.329
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Courier.web", "Courier.web\Courier.web.csproj", "{AE1EDDD8-6356-4598-8E8A-E0149CD989E6}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AE1EDDD8-6356-4598-8E8A-E0149CD989E6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE1EDDD8-6356-4598-8E8A-E0149CD989E6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE1EDDD8-6356-4598-8E8A-E0149CD989E6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE1EDDD8-6356-4598-8E8A-E0149CD989E6}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {29A280D7-52C7-4961-889D-7C4A576AAC80}
+	EndGlobalSection
+EndGlobal

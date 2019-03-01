@@ -1,0 +1,161 @@
+
+
+<form *ngIf="CreateCourierRuns" name="form" style="text-align:left" class="form-horizontal" (ngSubmit)="f.form.valid && saveCourierRunsData(f)" #f="ngForm" novalidate>
+
+  <!--Heading-->
+  <div>
+    <h3><label> Create Courier Runs</label></h3>
+  </div>
+
+
+  <!--Courier Run Name-->
+  <div class="form-group">
+    <label for="runName" class="control-label col-sm-2">Run Name </label>
+    <div class="col-sm-4">
+      <input type="text" class="form-control" placeholder="Enter RunName" name="runName" [(ngModel)]="post.runName" #runName="ngModel" [ngClass]="{ 'is-invalid': f.submitted && runName.invalid  }" required maxlength="50" minlength="2" pattern="[a-zA-Z ]*">
+      <div *ngIf="f.submitted && runName.invalid" class="invalid-feedback">
+        <div *ngIf="runName.errors.required">RunName is required</div>
+        <div *ngIf="runName.errors.maxlength">Limit Exceeded</div>
+        <div *ngIf="runName.errors.minlength">Limit Least </div>
+        <div *ngIf="runName.errors.pattern">Please Enter Alphabets Only </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <!--Is Regular Run-->
+  <div>
+    <label class="control-label col-sm-2">Is Regular Run  </label>
+    <div>
+      <label class="radio-inline">
+        <input type="radio" value="True" name="isRegularRun" [(ngModel)]="post.isRegularRun" #isRegularRun="ngModel" [ngClass]="{ 'is-invalid': f.submitted && isRegularRun.invalid }" required> True
+      </label>
+      <label class="radio-inline">
+        <input type="radio" value="False" name="isRegularRun" [(ngModel)]="post.isRegularRun" #isRegularRun="ngModel" (change)="runNamedefault()" [ngClass]="{ 'is-invalid': f.submitted && isRegularRun.invalid }" required> False
+      </label>
+      <div *ngIf="f.submitted && isRegularRun.invalid" class="invalid-feedback">
+        <div *ngIf="isRegularRun.errors.required">Select Regular Name </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <!--Save and Reset Button-->
+  <div class="btn-toolbar">
+    <button class="btn btn-primary btn-md" style="margin-right:10px;" type="submit">
+      <span *ngIf="!post.courierRunsId">Save</span>
+      <span *ngIf="post.courierRunsId">Update</span>
+    </button>
+
+    <button style="margin-right:10px;" class="btn btn-primary btn-md" type="reset" (click)="resetValue()">
+      Reset
+    </button>
+  </div>
+
+</form>
+
+
+<!--Additional Button-->
+
+<!--Create Button-->
+<div style="text-align:left">
+  <button type="button" *ngIf="!CreateCourierRuns" class="btn btn-link" (click)="createform()">Create </button>
+</div>
+<!--Reset Button-->
+<div style="text-align:left">
+  <button type="button" *ngIf="CreateCourierRuns" class="btn btn-link" (click)="backform()">Home </button>
+</div>
+
+
+
+<form>
+  <div>
+    <!--Searching-->
+    <div>
+      <div class="control-label col-sm-4">
+        <input type="text" class="form-control" placeholder="Search for..." [(ngModel)]="searchText" (ngModelChange)="cancelSearch($event)" name="searchText">
+      </div>
+      <div class="control-label col-sm-1">
+        <button class="btn btn-primary" type="submit" (click)="searchField(searchText, true)" *ngIf="!search"> Search </button>
+      </div>
+    </div>
+  </div>
+</form>
+
+
+
+<form>
+  <table class="table table-striped" border="1">
+    <tr>
+      <th>
+        <label>
+          SN
+          <span [ngClass]="isCategory === true ? 'fa fa-caret-up' : 'fa fa-caret-down'" (click)="sortByField(isDescending, 'courierRunsId')"></span>
+        </label>
+
+      </th>
+      <th>
+        <label>
+          Run Name
+          <span [ngClass]="isParentCategory === true ? 'fa fa-caret-up' : 'fa fa-caret-down'" (click)="sortByField(isDescending, 'RunName')"></span>
+        </label>
+      </th>
+      <th>
+        <label>
+          Is Regular Run
+          <span [ngClass]="isChildCategory === true ? 'fa fa-caret-up' : 'fa fa-caret-down' " (click)="sortByField(isDescending, 'isRegularRun')"></span>
+        </label>
+      </th>
+      <th>
+        <label>
+          Action
+        </label>
+      </th>
+
+    </tr>
+
+    <tr *ngFor="let post of posts; let i=index">
+      <td>  {{i+1}} </td>
+      <td>  {{post.runName}} </td>
+      <td>  {{post.isRegularRun}} </td>
+
+
+      <td>
+        <div class="btn-toolbar">
+          <button class="btn btn-success" style="margin-right:10px;" (click)="editCourierRunsData(post.courierRunsId)">Edit </button>
+
+          <button class="btn btn-danger" style="margin-right:10px;" (click)="deleteCourierRuns(post.courierRunsId)">Delete</button>
+        </div>
+      </td>
+
+    </tr>
+
+  </table>
+</form>
+
+
+<!--Pageing-->
+<div class="form-group">
+  <div class="row">
+    <div class="col-sm-8">
+      <nav aria-label="Page navigation example">
+        <app-pagination [pager]="pager" (offset)="getPagedList($event)"></app-pagination>
+        <div>
+        </div>
+      </nav>
+    </div>
+
+    <div class="col-sm-3">
+      <div class="pull-right">
+        <select class="form-control" [(ngModel)]="pagedDataRequest.pageSize" (ngModelChange)="onChange()">
+          <option *ngFor="let pageSize of pageSizes">
+            {{pageSize}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</div>
